@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit'
 import productSlice from "./slices/product"
 import cartSlice from "./slices/cart"
 
-
 export const store = configureStore({
     reducer: {
         // define state or data
@@ -10,8 +9,6 @@ export const store = configureStore({
         cartArray: cartSlice,
     }
 })
-
-
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>
