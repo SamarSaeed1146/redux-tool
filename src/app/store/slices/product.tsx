@@ -16,8 +16,12 @@ const productSlice = createSlice({
   name: "product",
   initialState,
   reducers: {
-    addProduct: (state, action) => {},
-    deleteProduct: (state, action) => {},
+    addProduct: (state, action) => {
+      state.push(action.payload);
+    },
+    deleteProduct: (state, action) => {
+      state.splice(action.payload, 1);
+    },
   },
 });
 
