@@ -3,12 +3,14 @@
 import { useState } from "react";
 import { useAppSelector, useAppDispatch } from "../store/hooks";
 import { addProduct } from "../store/slices/product";
+import { addCart } from "../store/slices/cart";
 
 const ProductList = () => {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [qty, setQty] = useState(0);
   const products = useAppSelector((state) => state.productArray);
+  const cart = useAppSelector((state) => state.cartArray);
   const dispatch = useAppDispatch();
 
   return (
@@ -46,8 +48,13 @@ const ProductList = () => {
             <div className="w-350 border rounded-md bg-gray-400 p-4" key={i}>
               <h1>{item.name}</h1>
               <p>{item.category}</p>
-              <p>{item.qty}</p>
-              <button>Add Cart</button>
+              <p>qty :{item.qty}</p>
+              <button
+                onClick={() => dispatch(addCart(item))}
+                className="bg-black/80 text-white p-3 mt-3 rounded-md"
+              >
+                Add Cart
+              </button>
             </div>
           );
         })}

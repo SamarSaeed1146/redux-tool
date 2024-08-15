@@ -1,22 +1,33 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 interface CartState {
-    name: string
-    category: string
-    qty: number
+  name: string;
+  category: string;
+  qty: number;
 }
 
-const initialState: CartState[] = [{name: "Glasses", category: "fox", qty: 1}];
+const initialState: CartState[] = [];
 
 const cartSlice = createSlice({
-    name: 'cart',
-    initialState,
-    reducers: {
-        addCart: (state, action) => {},
-        deleteCart: (state, action) => {}
-    }
-})
+  name: "cart",
+  initialState,
+  reducers: {
+    addCart: (state, action) => {
+      const obj = state.find((val) => val.name === action.payload.name);
+      if (obj) {
+        ++obj.qty;
+        const newState = state.filter((val) => val.name !== obj.name);
+        state = [...newState, obj];
+        return;
+      }
+      state.push(action.payload);
+    },
+    deleteCart: (state, action) => {
+      return state.filter(val => val.name !== action.payload.name);
+    },
+  },
+});
 
-export const { addCart, deleteCart } = cartSlice.actions
+export const { addCart, deleteCart } = cartSlice.actions;
 
-export default cartSlice.reducer
+export default cartSlice.reducer;
