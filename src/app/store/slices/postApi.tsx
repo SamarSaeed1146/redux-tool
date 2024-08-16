@@ -3,15 +3,22 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const postApi = createApi({
   reducerPath: "postApi",
+  tagTypes: ["hello", "userId"],
   baseQuery: fetchBaseQuery({
     baseUrl: "https://jsonplaceholder.typicode.com",
   }),
   endpoints: (builder) => ({
     getPosts: builder.query({
       query: () => `/users`,
+      transformResponse: (res: any, meta, arg) => {
+        if (arg) return res.find((val: any) => val.id < arg) 
+        return res
+      },
+      providesTags: ["hello"],
     }),
     getPostsById: builder.query({
       query: (id) => `/users/${id}`,
+      providesTags: ["userId"],
     }),
     createPost: builder.mutation({
       query: (data) => ({
@@ -19,6 +26,7 @@ export const postApi = createApi({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["hello", "userId"],
     }),
     updatePost: builder.mutation({
       query: (data) => ({
