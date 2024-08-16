@@ -1,15 +1,26 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import productSlice from "./slices/product";
 import cartSlice from "./slices/cart";
 import { postApi } from "./slices/postApi";
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
+const rootReducer = combineReducers({
+  // define state or data
+  productArray: productSlice,
+  cartArray: cartSlice,
+  [postApi.reducerPath]: postApi.reducer,
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: {
-    // define state or data
-    productArray: productSlice,
-    cartArray: cartSlice,
-    [postApi.reducerPath]: postApi.reducer,
-  },
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(postApi.middleware),
 });

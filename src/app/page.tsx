@@ -20,12 +20,12 @@ export default function Home() {
     <main className="p-6">
       <h1 className="text-center">Redux Toolkit RTK Query</h1>
       <br />
-      <button onClick={() => updatepost(111)}>
+      <button className="py-4" onClick={() => updatepost(111)}>
         create user
       </button>
-      {/* <ProductList/>
+      <ProductList/>
       <h1 className="my-5">Cart List</h1>
-      <CartList /> */}
+      <CartList />
     </main>
   );
 }
