@@ -2,7 +2,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import productSlice from "./slices/product";
 import cartSlice from "./slices/cart";
 import { postApi } from "./slices/postApi";
-import { setupListeners } from "@reduxjs/toolkit/query";
 
 export const store = configureStore({
   reducer: {
@@ -14,8 +13,6 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(postApi.middleware),
 });
-
-setupListeners(store.dispatch)
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
